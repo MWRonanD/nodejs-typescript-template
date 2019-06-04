@@ -1,10 +1,13 @@
 import { Body, Delete, Get, JsonController, Param, Post, Put } from 'routing-controllers';
 import { ExampleService } from '../services/ExampleService';
+import { IExample } from '../interfaces/example.interface';
+import Example from '../models/Example';
+import { response } from 'express';
 
 @JsonController('/examples')
 export class ExampleController {
 
-  constructor(private exampleService: ExampleService) {}
+  constructor(private exampleService: ExampleService) { }
 
   @Get()
   getAll() {
@@ -17,8 +20,14 @@ export class ExampleController {
   }
 
   @Post()
-  post(@Body() example: any) {
-    return 'Saving example...';
+  post(@Body() example: IExample) {
+    const postData: IExample = example;
+    const createdPost = new Example(postData);
+    createdPost.save()
+      .then((savedPost) => {
+        response.send(savedPost);
+      });
+    return 'Somthing';
   }
 
   @Put('/:id')

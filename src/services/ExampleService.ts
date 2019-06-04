@@ -1,14 +1,16 @@
 import { Service } from 'typedi';
-import { Example } from '../models/Example';
+import { IExample } from '../interfaces/example.interface';
 
 @Service()
 export class ExampleService {
   private examples = [
-    new Example('example 1'),
-    new Example('example 2'),
   ];
 
-  findAll(): Example[] {
+  findAll(): IExample[] {
     return this.examples;
   }
+
+  // async createExemple(ex: IExample) : Promise<IExample> {
+
+  // }
 }

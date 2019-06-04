@@ -3,8 +3,19 @@ import { createExpressServer, useContainer } from 'routing-controllers';
 import { Request, Response } from 'express';
 import { ExampleController } from './controllers/ExampleController';
 import { Container } from 'typedi/Container';
+import * as mongoose from 'mongoose';
+import 'dotenv/config';
+import { ValidateEnv } from './utils/validate.env';
 
 useContainer(Container);
+
+ValidateEnv.checkEnv();
+const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
+
+mongoose.connect(
+  `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`,
+  { useNewUrlParser: true },
+);
 
 const app = createExpressServer({
   cors: {
