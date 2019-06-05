@@ -25,16 +25,9 @@ export class ExampleController {
     const postData: IExample = example;
 
     const createdPost = new Example(postData);
-    await createdPost.save()
-      .then(
-        (savedPost) => {
-          // savedPost;
-        },
-        (error) => {
-          // Promise.reject(error);
-        },
-      );
-    // response.send(createdPost);
+    const lol = await createdPost.save();
+    console.log('lol', lol.toJSON());
+    return lol.toJSON();
   }
 
   @Put('/:id')
