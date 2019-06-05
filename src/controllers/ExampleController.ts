@@ -20,14 +20,21 @@ export class ExampleController {
   }
 
   @Post()
-  post(@Body() example: IExample) {
+  async post(@Body() example: IExample) {
+
     const postData: IExample = example;
+
     const createdPost = new Example(postData);
-    createdPost.save()
-      .then((savedPost) => {
-        response.send(savedPost);
-      });
-    return 'Somthing';
+    await createdPost.save()
+      .then(
+        (savedPost) => {
+          // savedPost;
+        },
+        (error) => {
+          // Promise.reject(error);
+        },
+      );
+    // response.send(createdPost);
   }
 
   @Put('/:id')
