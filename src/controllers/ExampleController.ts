@@ -23,6 +23,7 @@ export class ExampleController {
     return await this.exampleService.save(example);
     }
 
+
   @Put('/:id')
   async put(@Param('id') id: string, @Body() example: Example) {
     return await this.exampleService.update(id,example);
