@@ -1,5 +1,5 @@
-import { Document } from 'mongoose';
-export interface IExample extends Document {
+// import { Document } from 'mongoose';
+export interface IExample  {
   firstName?: string;
   lastName?:string;
 }

@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import { IExample } from '../interfaces/example.interface';
 
 // tslint:disable-next-line: variable-name
@@ -7,7 +7,6 @@ export const ExampleSchema = new Schema({
   lastName: { type: String, required: true },
 });
 
-// tslint:disable-next-line: variable-name
-const Example = model<IExample>('Example', ExampleSchema);
+export class Example extends model<IExample & Document>('Example', ExampleSchema) implements IExample{
 
-export default Example;
+}

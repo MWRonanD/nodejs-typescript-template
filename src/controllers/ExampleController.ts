@@ -1,8 +1,7 @@
 import { Body, Delete, Get, JsonController, Param, Post, Put } from 'routing-controllers';
 import { ExampleService } from '../services/ExampleService';
-import { IExample } from '../interfaces/example.interface';
-import Example from '../models/Example';
-import { response } from 'express';
+import { Example } from '../models/Example';
+// import { IExample } from '../interfaces/example.interface';
 
 @JsonController('/examples')
 export class ExampleController {
@@ -10,36 +9,23 @@ export class ExampleController {
   constructor(private exampleService: ExampleService) { }
 
   @Get()
-  getAll() {
-    return this.exampleService.findAll();
+  async getAll() {
+    return await this.exampleService.findAll()
   }
 
   @Get('/:id')
-  getOne(@Param('id') id: number) {
-    return `This action returns example # ${id}`;
+  async getOne(@Param('id') id: string) {
+    return await this.exampleService.find(id);
   }
 
   @Post()
-  async post(@Body() example: IExample) {
-
-    const postData: IExample = example;
-
-    const createdPost = new Example(postData);
-    await createdPost.save()
-      .then(
-        (savedPost) => {
-          // savedPost;
-        },
-        (error) => {
-          // Promise.reject(error);
-        },
-      );
-    // response.send(createdPost);
-  }
+  async post(@Body() example: Example) {
+    return await this.exampleService.save(example);
+    }
 
   @Put('/:id')
-  put(@Param('id') id: number, @Body() example: any) {
-    return 'Updating a example...';
+  async put(@Param('id') id: string, @Body() example: Example) {
+    return await this.exampleService.update(id,example);
   }
 
   @Delete('/:id')
